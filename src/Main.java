@@ -97,7 +97,7 @@ public class Main {
 
         Produto produtoBuscado = estoque.buscarProduto(codigoOuNome, codigoOuNome);
         if (produtoBuscado != null) {
-            System.out.println("Produto encontrado: " + produtoBuscado.nome);
+            System.out.println("Produto encontrado: " + produtoBuscado);
         } else {
             System.out.println("Produto não encontrado.");
         }

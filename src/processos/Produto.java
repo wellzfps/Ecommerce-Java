@@ -15,4 +15,14 @@ public class Produto {
         this.quantidadeEstoque = quantidadeEstoque;
         this.fornecedor = fornecedor;
     }
+
+    @Override
+    public String toString() {
+        return "Produto" +
+                "nome=: '" + nome + '\'' +
+                ", codigo: '" + codigo + '\'' +
+                ", preco: " + preco +
+                ", quantidadeEstoque: " + quantidadeEstoque +
+                ", fornecedor: '" + fornecedor + '\'';
+    }
 }

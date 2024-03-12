@@ -62,7 +62,7 @@ public class Estoque {
     // Método para buscar um produto pelo código ou nome
     public Produto buscarProduto(String codigo, String nome) {
         for (Produto produto : produtos) {
-            if (produto.codigo.equals(codigo) && produto.nome.equals(nome)) {
+            if (produto.codigo.equals(codigo) || produto.nome.equals(nome)) {
                 return produto;
             }
         }
