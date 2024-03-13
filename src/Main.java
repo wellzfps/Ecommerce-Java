@@ -9,6 +9,7 @@ public class Main {
         Estoque estoque = new Estoque();
 
         while (true) {
+            //Menu de escolhas
             System.out.println("\n===== Sistema de Gerenciamento de Estoque =====");
             System.out.println("1. Cadastrar Produto");
             System.out.println("2. Realizar Venda");
@@ -22,6 +23,7 @@ public class Main {
             int opcao = scanner.nextInt();
             scanner.nextLine();  // Limpar o buffer do teclado
 
+            //Menu de escolhas
             switch (opcao) {
                 case 1:
                     cadastrarProduto(estoque, scanner);
@@ -76,11 +78,12 @@ public class Main {
         System.out.print("Digite o código do produto: ");
         String codigo = scanner.nextLine();
 
+
         System.out.print("Digite a quantidade a ser vendida: ");
         int quantidade = scanner.nextInt();
-        scanner.nextLine();  // Limpar o buffer do teclado
 
-        estoque.realizarVenda(codigo, quantidade);
+        scanner.nextLine();  // Limpar o buffer do teclado
+        estoque.realizarVenda(codigo,quantidade);
     }
 
     private static void listarProdutosEstoqueBaixo(Estoque estoque, Scanner scanner) {

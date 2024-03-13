@@ -25,11 +25,16 @@ public class Estoque {
     public void realizarVenda(String codigo, int quantidade) {
         // Busca o produto pelo código
         Produto produto = buscarProduto(codigo, "");
+        //constante para quantidade minima
+        final int quantidadeMinima = 100;
         if (produto != null) {
             // Verifica se há estoque suficiente para a venda
             if (produto.quantidadeEstoque >= quantidade) {
                 produto.quantidadeEstoque -= quantidade;
                 System.out.println("Venda realizada com sucesso.");
+                if (produto.quantidadeEstoque <= quantidadeMinima) {
+                    System.out.print("Prdouto com estoque baixo!");
+                }
             } else {
                 System.out.println("Estoque insuficiente para realizar a venda.");
             }
@@ -41,10 +46,14 @@ public class Estoque {
     // Método para listar todos os produtos no estoque
     public void listarProdutos() {
         System.out.println("Lista de Produtos:");
+        final int quantidadeMinima = 100;
         for (Produto produto : produtos) {
             System.out.println("Nome: " + produto.nome + ", Código: " + produto.codigo +
                     ", Preço: " + produto.preco + ", Estoque: " + produto.quantidadeEstoque +
                     ", Fornecedor: " + produto.fornecedor);
+            if (produto.quantidadeEstoque <= quantidadeMinima) {
+                System.out.print("Prdouto com estoque baixo!");
+            }
         }
     }
 
@@ -68,7 +77,6 @@ public class Estoque {
         }
         return null;
     }
-
     // Método para calcular o valor total do estoque
     public double calcularValorTotalEstoque() {
         double valorTotal = 0;

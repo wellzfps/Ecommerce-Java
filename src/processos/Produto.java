@@ -1,11 +1,11 @@
 package processos;
 
 public class Produto {
-   public String nome;
-   public String codigo;
-   public double preco;
-   public int quantidadeEstoque;
-   public String fornecedor;
+    public String nome;
+    public String codigo;
+    public double preco;
+    public int quantidadeEstoque;
+    public String fornecedor;
 
     // Construtor para inicializar os atributos do produto
     public Produto(String nome, String codigo, double preco, int quantidadeEstoque, String fornecedor) {
@@ -18,8 +18,8 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto" +
-                "nome=: '" + nome + '\'' +
+        return "PRODUTO: " +
+                "nome: '" + nome + '\'' +
                 ", codigo: '" + codigo + '\'' +
                 ", preco: " + preco +
                 ", quantidadeEstoque: " + quantidadeEstoque +
