@@ -21,16 +21,8 @@ public class Main {
             System.out.print("Escolha uma opção: ");
 
             // Lê a opção escolhida pelo usuário
-            int opcao;
-            try {
-                opcao = scanner.nextInt();
-                scanner.nextLine();  // Limpa o buffer do teclado
-            } catch (java.util.InputMismatchException e) {
-                System.out.println("Entrada inválida. Tente novamente.");
-                scanner.nextLine(); // Limpa o buffer do teclado
-                continue;
-            }
-
+            int opcao = scanner.nextInt();
+            scanner.nextLine();  // Limpa o buffer do teclado
             // Executa a opção escolhida pelo usuário
             switch (opcao) {
                 case 1:
