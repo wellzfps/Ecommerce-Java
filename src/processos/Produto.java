@@ -1,11 +1,11 @@
 package processos;
 
 public class Produto {
-    public String nome;
-    public String codigo;
-    public double preco;
-    public int quantidadeEstoque;
-    public String fornecedor;
+    private String nome;
+    private String codigo;
+    private double preco;
+    private int quantidadeEstoque;
+    private String fornecedor;
 
     // Construtor para inicializar os atributos do produto
     public Produto(String nome, String codigo, double preco, int quantidadeEstoque, String fornecedor) {
@@ -16,6 +16,40 @@ public class Produto {
         this.fornecedor = fornecedor;
     }
 
+    // Métodos getters e setters para os atributos
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public String getFornecedor() {
+        return fornecedor;
+    }
+
+    // Método para vender uma quantidade do produto
+    public void venderProduto(int quantidade) {
+        if (quantidade <= quantidadeEstoque) {
+            quantidadeEstoque -= quantidade;
+        } else {
+            System.out.println("Estoque insuficiente para realizar a venda.");
+        }
+    }
+
+    // Método para adicionar uma quantidade ao estoque do produto
+    public void adicionarProduto(int quantidade) {
+        quantidadeEstoque += quantidade;
+    }
     @Override
     public String toString() {
         return "PRODUTO: " +

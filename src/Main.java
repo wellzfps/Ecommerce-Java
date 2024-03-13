@@ -9,7 +9,7 @@ public class Main {
         Estoque estoque = new Estoque();
 
         while (true) {
-            //Menu de escolhas
+            // Exibe o menu de escolhas
             System.out.println("\n===== Sistema de Gerenciamento de Estoque =====");
             System.out.println("1. Cadastrar Produto");
             System.out.println("2. Realizar Venda");
@@ -20,10 +20,18 @@ public class Main {
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();  // Limpar o buffer do teclado
+            // Lê a opção escolhida pelo usuário
+            int opcao;
+            try {
+                opcao = scanner.nextInt();
+                scanner.nextLine();  // Limpa o buffer do teclado
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Entrada inválida. Tente novamente.");
+                scanner.nextLine(); // Limpa o buffer do teclado
+                continue;
+            }
 
-            //Menu de escolhas
+            // Executa a opção escolhida pelo usuário
             switch (opcao) {
                 case 1:
                     cadastrarProduto(estoque, scanner);
@@ -53,51 +61,57 @@ public class Main {
         }
     }
 
+    // Função para cadastrar um novo produto
     private static void cadastrarProduto(Estoque estoque, Scanner scanner) {
         System.out.print("Digite o nome do produto: ");
         String nome = scanner.nextLine();
 
-        System.out.print("Digite o código do produto: ");
-        String codigo = scanner.nextLine();
+        String codigo = cadastrarCodigo(estoque,scanner);
 
-        System.out.print("Digite o preço do produto: ");
-        double preco = scanner.nextDouble();
+        double preco = solicitarPreco(scanner); // Solicita o preço do produto
 
-        System.out.print("Digite a quantidade em estoque do produto: ");
-        int quantidadeEstoque = scanner.nextInt();
-        scanner.nextLine();  // Limpar o buffer do teclado
+        int quantidadeEstoque = solicitarQuantidade(scanner); // Solicita a quantidade do produto
 
         System.out.print("Digite o fornecedor do produto: ");
         String fornecedor = scanner.nextLine();
 
+        // Cria um novo produto e o cadastra no estoque
         Produto novoProduto = new Produto(nome, codigo, preco, quantidadeEstoque, fornecedor);
         estoque.cadastrarProduto(novoProduto);
     }
 
+    // Função para realizar uma venda
     private static void realizarVenda(Estoque estoque, Scanner scanner) {
         System.out.print("Digite o código do produto: ");
         String codigo = scanner.nextLine();
 
+        Produto produto = estoque.buscarProduto(codigo, "");
+        if (produto != null) {
+            int quantidade = solicitarQuantidade(scanner);
 
-        System.out.print("Digite a quantidade a ser vendida: ");
-        int quantidade = scanner.nextInt();
-
-        scanner.nextLine();  // Limpar o buffer do teclado
-        estoque.realizarVenda(codigo,quantidade);
+            if (produto.getQuantidadeEstoque() >= quantidade) {
+                estoque.realizarVenda(codigo, quantidade);
+            } else {
+                System.out.println("Estoque insuficiente para realizar a venda.");
+            }
+        } else {
+            System.out.println("Produto não encontrado.");
+        }
     }
 
+    // Função para listar produtos com estoque abaixo de um valor mínimo
     private static void listarProdutosEstoqueBaixo(Estoque estoque, Scanner scanner) {
-        System.out.print("Digite a quantidade mínima em estoque: ");
-        int quantidadeMinima = scanner.nextInt();
-        scanner.nextLine();  // Limpar o buffer do teclado
+        int quantidadeMinima = solicitarQuantidade(scanner);
 
         estoque.listarProdutosEstoqueBaixo(quantidadeMinima);
     }
 
+    // Função para buscar um produto pelo código ou nome
     private static void buscarProduto(Estoque estoque, Scanner scanner) {
         System.out.print("Digite o código ou nome do produto: ");
         String codigoOuNome = scanner.nextLine();
 
+        // Busca o produto no estoque
         Produto produtoBuscado = estoque.buscarProduto(codigoOuNome, codigoOuNome);
         if (produtoBuscado != null) {
             System.out.println("Produto encontrado: " + produtoBuscado);
@@ -105,4 +119,58 @@ public class Main {
             System.out.println("Produto não encontrado.");
         }
     }
+
+    // Função para buscar um produto pelo código ou nome
+    private static String cadastrarCodigo(Estoque estoque, Scanner scanner) {
+        String codigo;
+        while (true) {
+            System.out.print("Digite o código do produto: ");
+            codigo = scanner.nextLine();
+
+            // Busca o produto no estoque
+            Produto produtoBuscado = estoque.buscarProduto(codigo, codigo);
+            if (produtoBuscado != null) {
+                System.out.println("Codigo ja Cadastrado: " + produtoBuscado);
+            }else{
+                break;
+            }
+        }
+        return codigo;
+    }
+
+    // Função para solicitar o preço do produto, garantindo que seja um valor positivo
+    private static double solicitarPreco(Scanner scanner) {
+        double preco;
+        while (true) {
+            System.out.print("Digite o preço do produto: ");
+            preco = scanner.nextDouble();
+            scanner.nextLine();  // Limpa o buffer do teclado
+
+            if (preco < 0) {
+                System.out.println("O preço deve ser um valor positivo.");
+            } else {
+                break;
+            }
+        }
+        return preco;
+    }
+
+    // Função para solicitar a quantidade do produto, garantindo que seja um valor positivo inteiro
+    private static int solicitarQuantidade(Scanner scanner) {
+        int quantidade;
+        while (true) {
+            System.out.print("Digite a quantidade do produto: ");
+            quantidade = scanner.nextInt();
+            scanner.nextLine();  // Limpa o buffer do teclado
+
+            if (quantidade < 0) {
+                System.out.println("A quantidade deve ser um valor positivo inteiro.");
+            } else {
+                break;
+            }
+        }
+        return quantidade;
+    }
+
+
 }
