@@ -20,7 +20,7 @@ public class Estoque {
     // Método para cadastrar um novo produto no estoque
     public void cadastrarProduto(Produto produto) {
         // Verifica se o produto já está cadastrado pelo código
-        if (buscarProduto(produto.getCodigo(), "") == null) {
+        if (buscarProduto(produto.getCodigo(), produto.getNome()) == null) {
             produtos.add(produto);
             System.out.println("\nProduto foi cadastrado com sucesso.");
         } else {
@@ -29,9 +29,9 @@ public class Estoque {
     }
 
     // Método para realizar uma venda e atualizar o estoque
-    public void realizarVenda(String codigo, int quantidade) {
-        // Busca o produto pelo código
-        Produto produto = buscarProduto(codigo, "");
+    public void realizarVenda(String codigoOuNome, int quantidade) {
+
+        Produto produto = buscarProduto(codigoOuNome, "");
         if (produto != null) {
             // Verifica se há estoque suficiente para a venda
             if (produto.getQuantidadeEstoque() >= quantidade) {

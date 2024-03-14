@@ -74,15 +74,15 @@ public class Main {
 
     // Método para realizar uma venda validando se o valor informado é menor que a quantidade em estoque e maior que 0
     private static void realizarVenda(Estoque estoque, Scanner scanner) {
-        System.out.print("Digite o código do produto: ");
-        String codigo = scanner.nextLine();
+        System.out.print("Digite o código ou nome do produto: ");
+        String codigoOuNome = scanner.nextLine();
 
-        Produto produto = estoque.buscarProduto(codigo, "");
+        Produto produto = estoque.buscarProduto(codigoOuNome, codigoOuNome);
         if (produto != null) {
             int quantidade = solicitarQuantidade(scanner);
 
             if (produto.getQuantidadeEstoque() >= quantidade) {
-                estoque.realizarVenda(codigo, quantidade);
+                estoque.realizarVenda(produto.getCodigo(), quantidade);
             } else {
                 System.out.println("Estoque insuficiente para realizar a venda.");
             }
