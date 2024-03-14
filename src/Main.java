@@ -10,19 +10,18 @@ public class Main {
 
         while (true) {
             // Exibe o menu de escolhas
-            System.out.println("\n===== Sistema de Gerenciamento de Estoque =====");
-            System.out.println("1. Cadastrar Produto");
-            System.out.println("2. Realizar Venda");
-            System.out.println("3. Listar Produtos");
-            System.out.println("4. Listar Produtos com Estoque Baixo");
-            System.out.println("5. Buscar Produto");
-            System.out.println("6. Calcular Valor Total do Estoque");
-            System.out.println("0. Sair");
+            System.out.println("\nSistema de Gerenciamento de Estoque");
+            System.out.println("1: Cadastrar Produto");
+            System.out.println("2: Realizar Venda");
+            System.out.println("3: Listar Produtos");
+            System.out.println("4: Listar Produtos com Estoque Baixo");
+            System.out.println("5: Buscar Produto");
+            System.out.println("6: Calcular Valor Total do Estoque");
+            System.out.println("0: Sair");
             System.out.print("Escolha uma opção: ");
 
-            // Lê a opção escolhida pelo usuário
             int opcao = scanner.nextInt();
-            scanner.nextLine();  // Limpa o buffer do teclado
+            scanner.nextLine();
             // Executa a opção escolhida pelo usuário
             switch (opcao) {
                 case 1:
@@ -60,9 +59,9 @@ public class Main {
 
         String codigo = cadastrarCodigo(estoque,scanner);
 
-        double preco = solicitarPreco(scanner); // Solicita o preço do produto
+        double preco = solicitarPreco(scanner);
 
-        int quantidadeEstoque = solicitarQuantidade(scanner); // Solicita a quantidade do produto
+        int quantidadeEstoque = solicitarQuantidade(scanner);
 
         System.out.print("Digite o fornecedor do produto: ");
         String fornecedor = scanner.nextLine();
@@ -103,7 +102,6 @@ public class Main {
         System.out.print("Digite o código ou nome do produto: ");
         String codigoOuNome = scanner.nextLine();
 
-        // Busca o produto no estoque
         Produto produtoBuscado = estoque.buscarProduto(codigoOuNome, codigoOuNome);
         if (produtoBuscado != null) {
             System.out.println("Produto encontrado: " + produtoBuscado);
@@ -119,7 +117,6 @@ public class Main {
             System.out.print("Digite o código do produto: ");
             codigo = scanner.nextLine();
 
-            // Busca o produto no estoque
             Produto produtoBuscado = estoque.buscarProduto(codigo, codigo);
             if (produtoBuscado != null) {
                 System.out.println("Codigo ja Cadastrado: " + produtoBuscado);
@@ -136,7 +133,7 @@ public class Main {
         while (true) {
             System.out.print("Digite o preço do produto: ");
             preco = scanner.nextDouble();
-            scanner.nextLine();  // Limpa o buffer do teclado
+            scanner.nextLine();
 
             if (preco < 0) {
                 System.out.println("O preço deve ser um valor positivo.");
@@ -153,7 +150,7 @@ public class Main {
         while (true) {
             System.out.print("Digite a quantidade do produto: ");
             quantidade = scanner.nextInt();
-            scanner.nextLine();  // Limpa o buffer do teclado
+            scanner.nextLine();
 
             if (quantidade < 0) {
                 System.out.println("A quantidade deve ser um valor positivo inteiro.");
@@ -163,6 +160,5 @@ public class Main {
         }
         return quantidade;
     }
-
 
 }

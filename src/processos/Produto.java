@@ -1,6 +1,6 @@
 package processos;
 
-public class Produto {
+public class Produto extends Estoque {
     private String nome;
     private String codigo;
     private double preco;
@@ -37,16 +37,10 @@ public class Produto {
         return fornecedor;
     }
 
-    // Método para vender uma quantidade do produto
     public void venderProduto(int quantidade) {
-        if (quantidade <= quantidadeEstoque) {
-            quantidadeEstoque -= quantidade;
-        } else {
-            System.out.println("Estoque insuficiente para realizar a venda.");
-        }
+            this.quantidadeEstoque -= quantidade;
     }
 
-    // Método para adicionar uma quantidade ao estoque do produto
     public void adicionarProduto(int quantidade) {
         quantidadeEstoque += quantidade;
     }

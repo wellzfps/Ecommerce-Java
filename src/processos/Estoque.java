@@ -4,7 +4,13 @@ import java.util.ArrayList;
 
 public class Estoque {
     private final ArrayList<Produto> produtos;
-    private static final int QUANTIDADE_MINIMA = 100; // Definindo a quantidade mínima como constante de classe
+
+    public ArrayList<Produto> getProdutos() {
+        return produtos;
+    }
+
+    // Definindo a quantidade mínima como constante de classe
+    private static final int quantidadeMinimaEmEstoque = 100;
 
     // Construtor que inicializa a lista de produtos
     public Estoque() {
@@ -16,9 +22,9 @@ public class Estoque {
         // Verifica se o produto já está cadastrado pelo código
         if (buscarProduto(produto.getCodigo(), "") == null) {
             produtos.add(produto);
-            System.out.println("Produto cadastrado com sucesso.");
+            System.out.println("\nProduto foi cadastrado com sucesso.");
         } else {
-            System.out.println("Produto já cadastrado.");
+            System.out.println("\nProduto já cadastrado!");
         }
     }
 
@@ -30,27 +36,32 @@ public class Estoque {
             // Verifica se há estoque suficiente para a venda
             if (produto.getQuantidadeEstoque() >= quantidade) {
                 produto.venderProduto(quantidade);
-                System.out.println("Venda realizada com sucesso.");
-                if (produto.getQuantidadeEstoque() <= QUANTIDADE_MINIMA) { // Verifica se o estoque ficou abaixo do mínimo
+                System.out.println("\nVenda realizada com sucesso.");
+                // Verifica se o estoque ficou abaixo do mínimo
+                if (produto.getQuantidadeEstoque() <= quantidadeMinimaEmEstoque) {
                     System.out.println("Produto com estoque baixo!");
                 }
             } else {
-                System.out.println("Estoque insuficiente para realizar a venda.");
+                System.out.println("\nEstoque insuficiente para realizar a venda.");
             }
         } else {
-            System.out.println("Produto não encontrado.");
+            System.out.println("\nProduto não encontrado.");
         }
     }
 
     // Método para listar todos os produtos no estoque
     public void listarProdutos() {
-        System.out.println("Lista de Produtos:");
-        for (Produto produto : produtos) {
-            System.out.println("Nome: " + produto.getNome() + ", Código: " + produto.getCodigo() +
-                    ", Preço: " + produto.getPreco() + ", Estoque: " + produto.getQuantidadeEstoque() +
-                    ", Fornecedor: " + produto.getFornecedor());
+        if (getProdutos().isEmpty()){
+            System.out.println("\nNao a produtos cadastrado");
+        }else {
+            System.out.println("\nLista de Produtos:");
+            for (Produto produto : produtos) {
+                System.out.println("Nome: " + produto.getNome() + ", Código: " + produto.getCodigo() +
+                        ", Preço: " + produto.getPreco() + ", Estoque: " + produto.getQuantidadeEstoque() +
+                        ", Fornecedor: " + produto.getFornecedor());
+            }
+            listarProdutosEstoqueBaixo();
         }
-        listarProdutosEstoqueBaixo();
     }
 
     // Método para listar produtos com estoque abaixo de um valor definido
@@ -78,9 +89,9 @@ public class Estoque {
 
         // verificar quais estão com estoque abaixo da quantidade mínima
         for (Produto produto : produtos) {
-            if (produto.getQuantidadeEstoque() < QUANTIDADE_MINIMA) {
+            if (produto.getQuantidadeEstoque() < quantidadeMinimaEmEstoque) {
                 if (!encontrouProdutoBaixo) {
-                    System.out.println("\nPRODUTOS COM ESTOQUE A BAIXO DE " + QUANTIDADE_MINIMA);
+                    System.out.println("\nPRODUTOS COM ESTOQUE A BAIXO DE " + quantidadeMinimaEmEstoque);
                     encontrouProdutoBaixo = true; // Indica que pelo menos um produto com estoque baixo foi encontrado
                 }
                 System.out.println("Nome: " + produto.getNome() + ", Código: " + produto.getCodigo() +
