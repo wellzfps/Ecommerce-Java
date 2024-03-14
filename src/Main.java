@@ -1,5 +1,5 @@
-import processos.Estoque;
-import processos.Produto;
+import Entities.Estoque;
+import Entities.Produto;
 
 import java.util.Scanner;
 
@@ -10,7 +10,7 @@ public class Main {
 
         while (true) {
             // Exibe o menu de escolhas
-            System.out.println("\nSistema de Gerenciamento de Estoque");
+            System.out.println("\nGerenciamento de Estoque");
             System.out.println("1: Cadastrar Produto");
             System.out.println("2: Realizar Venda");
             System.out.println("3: Listar Produtos");
@@ -18,7 +18,7 @@ public class Main {
             System.out.println("5: Buscar Produto");
             System.out.println("6: Calcular Valor Total do Estoque");
             System.out.println("0: Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.print("Informe oque deseja:  ");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -45,33 +45,34 @@ public class Main {
                     break;
                 case 0:
                     System.out.println("Saindo do sistema. Até logo!");
+                    scanner.close();
                     System.exit(0);
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
         }
+
     }
 
-    // Função para cadastrar um novo produto
+    // Método para cadastrar um novo produto verificando se o código ja foi cadastrado, se a quantidade e o preço é positivo
     private static void cadastrarProduto(Estoque estoque, Scanner scanner) {
-        System.out.print("Digite o nome do produto: ");
-        String nome = scanner.nextLine();
 
-        String codigo = cadastrarCodigo(estoque,scanner);
+        String nome = cadastrarNome(scanner);
 
-        double preco = solicitarPreco(scanner);
+        String codigo = cadastrarCodigo(estoque, scanner);
+
+        double valor = solicitarPreco(scanner);
 
         int quantidadeEstoque = solicitarQuantidade(scanner);
 
-        System.out.print("Digite o fornecedor do produto: ");
-        String fornecedor = scanner.nextLine();
+        String fornecedor = cadastrarFornecedor(scanner);
 
-        // Cria um novo produto e o cadastra no estoque
-        Produto novoProduto = new Produto(nome, codigo, preco, quantidadeEstoque, fornecedor);
-        estoque.cadastrarProduto(novoProduto);
+        // Cria um novo produto e o guarda no estoque
+        Produto produto = new Produto(nome, codigo, valor, quantidadeEstoque, fornecedor);
+        estoque.cadastrarProduto(produto);
     }
 
-    // Função para realizar uma venda
+    // Método para realizar uma venda validando se o valor informado é menor que a quantidade em estoque e maior que 0
     private static void realizarVenda(Estoque estoque, Scanner scanner) {
         System.out.print("Digite o código do produto: ");
         String codigo = scanner.nextLine();
@@ -90,14 +91,14 @@ public class Main {
         }
     }
 
-    // Função para listar produtos com estoque abaixo de um valor mínimo
+    // Método para listar produtos com estoque abaixo de um valor mínimo
     private static void listarProdutosEstoqueBaixo(Estoque estoque, Scanner scanner) {
         int quantidadeMinima = solicitarQuantidade(scanner);
 
         estoque.listarProdutosEstoqueBaixo(quantidadeMinima);
     }
 
-    // Função para buscar um produto pelo código ou nome
+    // Método para buscar um produto pelo código ou nome
     private static void buscarProduto(Estoque estoque, Scanner scanner) {
         System.out.print("Digite o código ou nome do produto: ");
         String codigoOuNome = scanner.nextLine();
@@ -110,41 +111,76 @@ public class Main {
         }
     }
 
-    // Função para buscar um produto pelo código ou nome
+    // Método para cadastrar o nome do produto
+    private static String cadastrarNome(Scanner scanner) {
+        String nome;
+        while (true) {
+            System.out.print("Digite o nome do produto: ");
+            nome = scanner.nextLine();
+            if (nome.isEmpty()) {
+                System.out.println("**** ERRO!: INFORME O NOME DO FORNECEDOR! ****");
+            } else {
+                break;
+            }
+
+        }
+        return nome;
+    }
+
+    // Método para cadastrar o nome do produto
+    private static String cadastrarFornecedor(Scanner scanner) {
+        String fornecedor;
+        while (true) {
+            System.out.print("Digite o nome do fornecedor: ");
+            fornecedor = scanner.nextLine();
+            if (fornecedor.isEmpty()) {
+                System.out.println("**** ERRO!: INFORME O NOME DO FORNECEDOR! ****");
+            } else {
+                break;
+            }
+
+        }
+        return fornecedor;
+    }
+
+    // Método para buscar um produto pelo código ou nome
     private static String cadastrarCodigo(Estoque estoque, Scanner scanner) {
         String codigo;
         while (true) {
             System.out.print("Digite o código do produto: ");
             codigo = scanner.nextLine();
-
+            if (codigo.isEmpty()) {
+                System.out.println("ERRO!: INFORME O CODIGO DO PRODUTO!");
+                continue;
+            }
             Produto produtoBuscado = estoque.buscarProduto(codigo, codigo);
             if (produtoBuscado != null) {
                 System.out.println("Codigo ja Cadastrado: " + produtoBuscado);
-            }else{
+            } else {
                 break;
             }
         }
         return codigo;
     }
 
-    // Função para solicitar o preço do produto, garantindo que seja um valor positivo
+    // Método para solicitar o preço do produto, garantindo que seja um valor positivo
     private static double solicitarPreco(Scanner scanner) {
-        double preco;
+        double valor;
         while (true) {
             System.out.print("Digite o preço do produto: ");
-            preco = scanner.nextDouble();
+            valor = scanner.nextDouble();
             scanner.nextLine();
 
-            if (preco < 0) {
-                System.out.println("O preço deve ser um valor positivo.");
-            } else {
+            if (valor > 0) {
                 break;
+            } else {
+                System.out.println("O preço deve ser um valor positivo.");
             }
         }
-        return preco;
+        return valor;
     }
 
-    // Função para solicitar a quantidade do produto, garantindo que seja um valor positivo inteiro
+    // Método para solicitar a quantidade do produto, garantindo que seja um valor positivo inteiro
     private static int solicitarQuantidade(Scanner scanner) {
         int quantidade;
         while (true) {
@@ -152,10 +188,10 @@ public class Main {
             quantidade = scanner.nextInt();
             scanner.nextLine();
 
-            if (quantidade < 0) {
-                System.out.println("A quantidade deve ser um valor positivo inteiro.");
-            } else {
+            if (quantidade > 0) {
                 break;
+            } else {
+                System.out.println("O quantidade deve ser um valor positivo.");
             }
         }
         return quantidade;
