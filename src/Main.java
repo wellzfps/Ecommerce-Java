@@ -41,7 +41,7 @@ public class Main {
                     break;
                 case 6:
                     double valorTotalEstoque = estoque.calcularValorTotalEstoque();
-                    System.out.println("Valor total do estoque: " + valorTotalEstoque);
+                    System.out.println("Valor total do estoque: R$" + String.format("%.2f",valorTotalEstoque));
                     break;
                 case 0:
                     System.out.println("Saindo do sistema. Até logo!");
@@ -118,7 +118,7 @@ public class Main {
             System.out.print("Digite o nome do produto: ");
             nome = scanner.nextLine();
             if (nome.isEmpty()) {
-                System.out.println("**** ERRO!: INFORME O NOME DO FORNECEDOR! ****");
+                System.out.println("**** ERRO!: INFORME O NOME DO PRODUTO! ****");
             } else {
                 break;
             }
@@ -168,9 +168,14 @@ public class Main {
         double valor;
         while (true) {
             System.out.print("Digite o preço do produto: ");
-            valor = scanner.nextDouble();
-            scanner.nextLine();
+            String entradaValor = scanner.nextLine();
 
+            if (entradaValor.isEmpty()) {
+                System.out.println("ERRO!: INFORME O VALOR DO PRODUTO!");
+                continue;
+            }
+            entradaValor = entradaValor.replace( ',', '.');
+            valor = Double.parseDouble(entradaValor);
             if (valor > 0) {
                 break;
             } else {
@@ -185,9 +190,13 @@ public class Main {
         int quantidade;
         while (true) {
             System.out.print("Digite a quantidade do produto: ");
-            quantidade = scanner.nextInt();
-            scanner.nextLine();
+            String entradaQuantidade = scanner.nextLine();
 
+            if (entradaQuantidade.isEmpty()) {
+                System.out.println("ERRO!: INFORME A QUANTIDADE DO PRODUTO EM ESTOQUE!");
+                continue;
+            }
+            quantidade = Integer.parseInt(entradaQuantidade);
             if (quantidade > 0) {
                 break;
             } else {

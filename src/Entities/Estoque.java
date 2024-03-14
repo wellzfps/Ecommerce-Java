@@ -56,9 +56,7 @@ public class Estoque {
         } else {
             System.out.println("\nLista de Produtos:");
             for (Produto produto : produtos) {
-                System.out.println("Nome: " + produto.getNome() + ", Código: " + produto.getCodigo() +
-                        ", Preço: " + produto.getPreco() + ", Estoque: " + produto.getQuantidadeEstoque() +
-                        ", Fornecedor: " + produto.getFornecedor());
+                System.out.println(produto);
             }
             listarProdutosEstoqueBaixo();
         }
@@ -71,8 +69,7 @@ public class Estoque {
         System.out.println("Produtos com estoque abaixo de " + quantidadeMinima + ":");
         for (Produto produto : produtos) {
             if (produto.getQuantidadeEstoque() < quantidadeMinima) {
-                System.out.println("Nome: " + produto.getNome() + ", Código: " + produto.getCodigo() +
-                        ", Estoque: " + produto.getQuantidadeEstoque());
+                System.out.println(produto);
                 encontrouProdutoBaixo = true; // Indica que pelo menos um produto com estoque baixo foi encontrado
             }
         }
@@ -94,9 +91,7 @@ public class Estoque {
                     System.out.println("\nPRODUTOS COM ESTOQUE A BAIXO DE " + quantidadeMinimaEmEstoque);
                     encontrouProdutoBaixo = true; // Indica que pelo menos um produto com estoque baixo foi encontrado
                 }
-                System.out.println("Nome: " + produto.getNome() + ", Código: " + produto.getCodigo() +
-                        ", Preço: " + produto.getPreco() + ", Estoque: " + produto.getQuantidadeEstoque() +
-                        ", Fornecedor: " + produto.getFornecedor());
+                System.out.println(produto);
             }
         }
 

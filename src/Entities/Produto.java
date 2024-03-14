@@ -43,11 +43,7 @@ public class Produto extends Estoque {
 
     @Override
     public String toString() {
-        return "PRODUTO: " +
-                "nome: '" + nome + '\'' +
-                ", codigo: '" + codigo + '\'' +
-                ", preco: " + preco +
-                ", quantidadeEstoque: " + quantidadeEstoque +
-                ", fornecedor: '" + fornecedor + '\'';
+        return "Produto: " + getNome() + ", Codigo: " + getCodigo() + ", Preço: R$" + String.format("%.2f",getPreco()) +
+                ", Quantidade Em Estoque: " + getQuantidadeEstoque() + ", Fornecedor: " + getFornecedor();
     }
 }
